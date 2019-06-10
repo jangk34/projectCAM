@@ -1,6 +1,11 @@
 package poly.controller;
 
+import java.io.BufferedReader;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,17 +16,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import poly.dto.GlamcamDTO;
-import poly.dto.NoticeDTO;
-import poly.dto.RecommendDTO;
 import poly.service.IGlamcamService;
-import poly.service.INoticeService;
-import poly.service.IRecommendService;
-import poly.util.CmmUtil;
+import poly.util.CSVReadFromFile;
 
 /*
  * Controller 선언해야만 Spring 프레임워크에서 Controller인지 인식 가능
@@ -46,8 +46,20 @@ public class GlamcamController {
 		return "/glamcam/glamcamList"; // 반환하는 jsp값
 	}
 	
-	
-	
+	@RequestMapping(value="searchFromCSV", method=RequestMethod.GET)
+	   public String searchFromCSV(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) throws Exception {
+	    List<List<String>> ret = new ArrayList<>();
+		BufferedReader br = null;
+		try {
+			br = Files.newBufferedReader(Paths.get("C:\\pro\\CampingProject\\WebContent\\resource\\csv\\grate.csv"));
+			Charset.forName("UTF-8");
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	     
+	      return "/search";
+	   }
 
 	
 }
